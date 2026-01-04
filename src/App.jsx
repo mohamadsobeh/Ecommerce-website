@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { HashRouter  as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Hero from "./components/Hero/Hero";
 import Category from "./components/Category/Category";
@@ -12,9 +12,12 @@ import Blogs from "./components/Blogs/Blogs";
 import { Partners } from "./components/Partners/Partners";
 import { Footer } from "./components/Footer/Footer";
 import Popup from "./components/Popup/Popup";
+
+// ✅ أهم تعديل: Pages بحرف P كبير (مثل فولدرك)
 import Shop from "./Pages/Shop";
-import About from "./pages/About";
-import BlogsPage from "./pages/Blogs";
+import About from "./Pages/About";
+import BlogsPage from "./Pages/Blogs";
+
 import LoginPage from "./components/LogIn/LoginPage";
 import RegisterPage from "./components/LogIn/RegisterPage";
 import Logout from "./components/LogIn/Logout";
@@ -48,7 +51,7 @@ const App = () => {
   const [cartItems, setCartItems] = useState([]);
   const [popupMessage, setPopupMessage] = useState("");
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [user, setUser] = useState(null); 
+  const [user, setUser] = useState(null);
 
   const addToCart = (product) => {
     setCartItems([...cartItems, product]);
@@ -56,7 +59,7 @@ const App = () => {
   };
 
   const clearCart = () => {
-    setCartItems([]); 
+    setCartItems([]);
   };
 
   const closePopup = () => {
@@ -80,6 +83,7 @@ const App = () => {
         clearCart={clearCart}
         onOpenCart={() => setIsCartOpen(true)}
       />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shop addToCart={addToCart} />} />
@@ -89,14 +93,16 @@ const App = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/logout" element={<Logout setUser={setUser} />} />
       </Routes>
+
       {popupMessage && <Popup message={popupMessage} onClose={closePopup} />}
+
       {isCartOpen && (
         <CartModal
           cartItems={cartItems}
           total={cartItems
             .reduce((acc, item) => acc + item.price, 0)
             .toFixed(2)}
-          clearCart={clearCart} 
+          clearCart={clearCart}
           onClose={() => setIsCartOpen(false)}
         />
       )}
@@ -107,7 +113,7 @@ const App = () => {
 const Home = () => {
   return (
     <>
-      <div className="lg:px-20 sm:px-12 px-6 bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
+      <div className="overflow-hidden px-6 bg-white duration-200 lg:px-20 sm:px-12 dark:bg-gray-900 dark:text-white">
         <Hero />
         <Category />
         <Services />
@@ -116,11 +122,13 @@ const Home = () => {
         <Banner data={BannerData2} />
         <Blogs />
       </div>
-      <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
+
+      <div className="overflow-hidden bg-white duration-200 dark:bg-gray-900 dark:text-white">
         <Partners />
         <Footer />
       </div>
     </>
   );
 };
+
 export default App;
